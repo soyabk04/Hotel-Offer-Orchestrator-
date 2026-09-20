@@ -7,11 +7,12 @@ const suppliers = {
   supplierB: supplierBHotels,
 };
 
-export const getHotelsOfSupplier = (supplier:SupplierName) => {
-  const data= suppliers[supplier];
-  console.log(data)
-  if (!data){
-    null
+export const getHotelsOfSupplier = (supplier: SupplierName) => {
+  const data = suppliers[supplier];
+
+  if (!data) {
+    return null;
   }
-  return data
+
+  return data;
 };

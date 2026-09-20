@@ -12,9 +12,14 @@ export const getSupplierAHotels = async (
 ): Promise<HotelOffer[]> => {
   const normalizedCity = city.trim().toLowerCase();
 
-  return supplierAHotels.filter(
-    (hotel) => hotel.city.toLowerCase() === normalizedCity
-  ) as HotelOffer[];
+  return supplierAHotels
+    .filter((hotel) => hotel.city.toLowerCase() === normalizedCity)
+    .map((hotel) => ({
+      name: hotel.name,
+      price: hotel.price,
+      supplier: "Supplier A",
+      commissionPct: hotel.commissionPct,
+    }));
 };
 
 export const getSupplierBHotels = async (
@@ -22,9 +27,14 @@ export const getSupplierBHotels = async (
 ): Promise<HotelOffer[]> => {
   const normalizedCity = city.trim().toLowerCase();
 
-  return supplierBHotels.filter(
-    (hotel) => hotel.city.toLowerCase() === normalizedCity
-  ) as HotelOffer[];
+  return supplierBHotels
+    .filter((hotel) => hotel.city.toLowerCase() === normalizedCity)
+    .map((hotel) => ({
+      name: hotel.name,
+      price: hotel.price,
+      supplier: "Supplier B",
+      commissionPct: hotel.commissionPct,
+    }));
 };
 
 export const getDedupedHotelOffer = async (

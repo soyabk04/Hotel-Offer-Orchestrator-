@@ -1,8 +1,6 @@
-import type { SupplierName } from "./supplier.types.js";
-
 export interface HotelOffer {
   name: string;
   price: number;
-  supplier: SupplierName;
+  supplier: "Supplier A" | "Supplier B";
   commissionPct: number;
 }

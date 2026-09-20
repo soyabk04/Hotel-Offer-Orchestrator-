@@ -3,6 +3,7 @@ import supplierRouter  from './routes/supplier.route.js';
 import hotelRouter from './routes/hotel.route.js'
 import healthRouter from "./routes/health.routes.js";
 import { errorMiddleware } from './middlewares/error.middleware.js';
+import { env } from './config/env.config.js';
 
 const app=express()
 
@@ -12,6 +13,6 @@ app.use('/api/hotels',hotelRouter)
 app.use('/health',healthRouter)
 
 app.use(errorMiddleware);
-app.listen(8000,()=>{
-    console.log('server is running on port 8000')
+app.listen(env.PORT,()=>{
+    console.log(`server is running on port ${env.PORT}`)
 })

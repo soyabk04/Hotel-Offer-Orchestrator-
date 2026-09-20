@@ -22,8 +22,8 @@ const {
   startToCloseTimeout: "1 minute",
 });
 
-export async function onboardingWorkflow(city: string) {
-  // Supplier A + B run in parallel
+export async function hotelOfferOrchestrationWorkflow(city: string) {
+
   const [supplierAOffers, supplierBOffers] = await Promise.all([
     getSupplierAHotels(city),
     getSupplierBHotels(city),
@@ -34,11 +34,11 @@ export async function onboardingWorkflow(city: string) {
     ...supplierBOffers,
   ];
 
-  // Deduplicate
+  
   const dedupedOffers =
     await getDedupedHotelOffer(allOffers);
 
-  // Redis is accessed through an Activity
+  
   await saveHotelOffers(city, dedupedOffers);
 
   return dedupedOffers;
