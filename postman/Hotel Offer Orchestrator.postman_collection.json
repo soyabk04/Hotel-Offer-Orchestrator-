@@ -1,0 +1,362 @@
+{
+  "info": {
+    "_postman_id": "7b7f7c6d-5d4e-4e9d-9f8a-hotel-offer-orchestrator",
+    "name": "Hotel Offer Orchestrator",
+    "description": "Postman collection for testing the Hotel Offer Orchestrator assessment.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8000"
+    }
+  ],
+  "item": [
+    {
+      "name": "Supplier APIs",
+      "item": [
+        {
+          "name": "Supplier A Hotels",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/supplierA/hotels",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "supplierA",
+                "hotels"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is an array\", function () {",
+                  "    pm.expect(pm.response.json()).to.be.an(\"array\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Supplier B Hotels",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/supplierB/hotels",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "supplierB",
+                "hotels"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is an array\", function () {",
+                  "    pm.expect(pm.response.json()).to.be.an(\"array\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Hotel APIs",
+      "item": [
+        {
+          "name": "Delhi - All Hotels",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/hotels?city=delhi",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "hotels"
+              ],
+              "query": [
+                {
+                  "key": "city",
+                  "value": "delhi"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "const json = pm.response.json();",
+                  "",
+                  "pm.test(\"Response is successful\", function () {",
+                  "    pm.expect(json.success).to.eql(true);",
+                  "});",
+                  "",
+                  "pm.test(\"Returns 5 unique Delhi hotels\", function () {",
+                  "    pm.expect(json.data).to.have.length(5);",
+                  "});",
+                  "",
+                  "pm.test(\"No duplicate hotel names\", function () {",
+                  "    const names = json.data.map(hotel => hotel.name);",
+                  "    pm.expect(new Set(names).size).to.eql(names.length);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Mumbai - All Hotels",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/hotels?city=mumbai",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "hotels"
+              ],
+              "query": [
+                {
+                  "key": "city",
+                  "value": "mumbai"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "const json = pm.response.json();",
+                  "",
+                  "pm.test(\"Response is successful\", function () {",
+                  "    pm.expect(json.success).to.eql(true);",
+                  "});",
+                  "",
+                  "pm.test(\"Returns 2 Mumbai hotels\", function () {",
+                  "    pm.expect(json.data).to.have.length(2);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Delhi - Price Filter",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/hotels?city=delhi&minPrice=5000&maxPrice=8500",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "hotels"
+              ],
+              "query": [
+                {
+                  "key": "city",
+                  "value": "delhi"
+                },
+                {
+                  "key": "minPrice",
+                  "value": "5000"
+                },
+                {
+                  "key": "maxPrice",
+                  "value": "8500"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "const json = pm.response.json();",
+                  "",
+                  "pm.test(\"Response is successful\", function () {",
+                  "    pm.expect(json.success).to.eql(true);",
+                  "});",
+                  "",
+                  "pm.test(\"All hotels are within price range\", function () {",
+                  "    json.data.forEach(hotel => {",
+                  "        pm.expect(hotel.price).to.be.at.least(5000);",
+                  "        pm.expect(hotel.price).to.be.at.most(8500);",
+                  "    });",
+                  "});",
+                  "",
+                  "pm.test(\"Returns expected 3 hotels\", function () {",
+                  "    pm.expect(json.data).to.have.length(3);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Mumbai - Price Filter",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/hotels?city=mumbai&minPrice=6000&maxPrice=7600",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "hotels"
+              ],
+              "query": [
+                {
+                  "key": "city",
+                  "value": "mumbai"
+                },
+                {
+                  "key": "minPrice",
+                  "value": "6000"
+                },
+                {
+                  "key": "maxPrice",
+                  "value": "7600"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "const json = pm.response.json();",
+                  "",
+                  "pm.test(\"Response is successful\", function () {",
+                  "    pm.expect(json.success).to.eql(true);",
+                  "});",
+                  "",
+                  "pm.test(\"All hotels are within price range\", function () {",
+                  "    json.data.forEach(hotel => {",
+                  "        pm.expect(hotel.price).to.be.at.least(6000);",
+                  "        pm.expect(hotel.price).to.be.at.most(7600);",
+                  "    });",
+                  "});",
+                  "",
+                  "pm.test(\"Returns Trident\", function () {",
+                  "    pm.expect(json.data).to.have.length(1);",
+                  "    pm.expect(json.data[0].name).to.eql(\"Trident\");",
+                  "    pm.expect(json.data[0].price).to.eql(7200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "No Results - Bangalore",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/hotels?city=bangalore",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "hotels"
+              ],
+              "query": [
+                {
+                  "key": "city",
+                  "value": "bangalore"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "const json = pm.response.json();",
+                  "",
+                  "pm.test(\"Response is successful\", function () {",
+                  "    pm.expect(json.success).to.eql(true);",
+                  "});",
+                  "",
+                  "pm.test(\"Returns no hotels\", function () {",
+                  "    pm.expect(json.data).to.be.an(\"array\");",
+                  "    pm.expect(json.data).to.have.length(0);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
